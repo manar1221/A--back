@@ -74,7 +74,7 @@
 
       <nav class="navbar" data-navbar>
 
-        <div class="wrapper">
+        <div  class="wrapper">
           <a href="/" class="logo">
             <img
               src="{{ asset('./assets/images/logo.png') }}"
@@ -444,14 +444,30 @@
           <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
         </button>
 
-        <a href="login.html" class="abtn has-before">
-          <span class="span">Log In Now</span>
+        @auth
+        <h2 class="text-uppercase">Hi {{ Auth::user()->name }}</h2>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
 
-          <ion-icon
-            name="arrow-forward-outline"
-            aria-hidden="true"
-          ></ion-icon>
-        </a>
+            <a href="{{ route('logout') }}" class="abtn has-before" onclick="event.preventDefault(); this.closest('form').submit();">
+            <span class="span">Log Out</span>
+
+            <ion-icon
+                name="arrow-forward-outline"
+                aria-hidden="true"
+            ></ion-icon>
+            </a>
+        </form>
+        @else
+            <a href="{{ route('login') }}" class="abtn has-before">
+            <span class="span">Log In Now</span>
+
+            <ion-icon
+                name="arrow-forward-outline"
+                aria-hidden="true"
+            ></ion-icon>
+            </a>
+        @endif
 
         <button
           class="header-action-btn"

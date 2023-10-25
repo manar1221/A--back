@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\AbookComponent;
+use App\Http\Livewire\Admin\AdminDashboardComponent;
 use App\Http\Livewire\All3dComponent;
 use App\Http\Livewire\AlldigitalComponent;
 use App\Http\Livewire\AllimagesComponent;
@@ -67,6 +68,7 @@ use App\Http\Livewire\TechimagesComponent;
 use App\Http\Livewire\TechvideosComponent;
 use App\Http\Livewire\TutvideosComponent;
 use App\Http\Livewire\UploadsComponent;
+use App\Http\Livewire\User\UserDashboardComponent;
 use App\Http\Livewire\Visual3dComponent;
 use App\Http\Livewire\VisualdigitalComponent;
 use App\Http\Livewire\VisualimagesComponent;
@@ -80,8 +82,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
@@ -179,3 +181,24 @@ Route::get('/shop',ShopComponent::class)->name('shop');
 Route::get('/abook',AbookComponent::class)->name('abook');
 Route::get('/aweb',AwebComponent::class)->name('aweb');
 Route::get('/aschool',AschoolComponent::class)->name('aschool');
+
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/user/dashboard',UserDashboardComponent::class)->name('user.dashboard');
+});
+
+Route::middleware('auth','authadmin')->group(function () {
+    Route::get('/admin/dashboard',AdminDashboardComponent::class)->name('admin.dashboard');
+});
+
+require __DIR__.'/auth.php';
